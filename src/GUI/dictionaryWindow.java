@@ -14,7 +14,8 @@ public class dictionaryWindow extends JFrame {
 
         String[][] data = {
                 { "Kundan Kumar Jha", "4031", "CSE" },
-
+                { "Kundan Kumar Jha", "4031", "CSE" },
+                { "Kundan Kumar Jha", "4031", "CSE" }
         };
         String[] columnNames = { "Name", "Roll Number", "Department" };
 
