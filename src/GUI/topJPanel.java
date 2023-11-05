@@ -1,9 +1,12 @@
 package GUI;
 
+import Data.Processing;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 public class topJPanel extends JPanel implements ActionListener {
     private JLabel searchBarLabel;
@@ -11,7 +14,7 @@ public class topJPanel extends JPanel implements ActionListener {
     private String[] searchChoices;
     private JComboBox searchChoicesList;
     private JButton searchButton;
-    private dictionaryWindow dictWindow;
+    private HashMap<String,String[]> dictionary;
     public topJPanel() {
         this.searchBarLabel = new JLabel(
                 "Keyword");
@@ -27,13 +30,26 @@ public class topJPanel extends JPanel implements ActionListener {
         this.add(this.searchBar);
         this.add(this.searchChoicesList);
         this.add(this.searchButton);
+
+        Processing dataProcess = new Processing();
+        this.dictionary = dataProcess.getDictionary();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == this.searchButton)
+        if(e.getSource() == this.searchButton && this.dictionary != null)
         {
-            this.dictWindow = new dictionaryWindow("Dictionary",300,300);
+            String[] colNames = {"Word", "Definitions"};
+            String[][] data = new String[this.dictionary.keySet().size()][2];
+
+            int i = 0;
+            for(String key : this.dictionary.keySet())
+            {
+                data[i][0] = key;
+                data[i][1] = String.join(" | ",this.dictionary.get(key));
+                i++;
+            }
+            dictionaryWindow dictTable = new dictionaryWindow("Dictionary",300,300,colNames,data);
         }
     }
 }
