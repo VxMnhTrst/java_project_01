@@ -33,7 +33,9 @@ public class topJPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.searchButton)
         {
-            this.dictWindow = dictionaryWindow.getInstance("Dictionary",300,300);
+            this.dictWindow = new dictionaryWindow("Dictionary",300,300);
         }
     }
 }
+
+

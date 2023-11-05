@@ -3,6 +3,7 @@ package Data;
 import java.io.*;
 import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 public class Processing {
     private String dictFileName;
@@ -36,13 +37,21 @@ public class Processing {
         try(BufferedReader reader = new BufferedReader(new FileReader(this.dictFileName))) {
             reader.readLine();
             int i = 0;
-            while(i < this.dictLines.length)
+            HashMap<String,String[]> dictionary = new HashMap<>();
+
+            while(i < this.dictLines.length - 1)
             {
                 String word = reader.readLine();
                 System.out.println(word);
                 this.dictLines[i] = word;
+                String slang = word.split("`")[0];
+                String[] definitions = word.split("`")[1].split("\\| ");
+//                System.out.println(slang + " " + definitions[0]);
+
+                dictionary.put(slang,definitions);
                 i++;
             }
+            System.out.println(dictionary.get("$_$")[0]);
             reader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
