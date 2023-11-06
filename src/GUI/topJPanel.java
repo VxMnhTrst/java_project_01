@@ -1,12 +1,11 @@
 package GUI;
 
-import Data.Processing;
+import FunctionalHandling.dictionary;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 public class topJPanel extends JPanel implements ActionListener {
     private JLabel searchBarLabel;
@@ -14,8 +13,8 @@ public class topJPanel extends JPanel implements ActionListener {
     private String[] searchChoices;
     private JComboBox searchChoicesList;
     private JButton searchButton;
-    private HashMap<String,String[]> dictionary;
-    public topJPanel() {
+    private dictionary searchFunctional;
+    public topJPanel(dictionary searchFunctional) {
         this.searchBarLabel = new JLabel(
                 "Keyword");
         this.searchBar = new JTextField();
@@ -31,61 +30,22 @@ public class topJPanel extends JPanel implements ActionListener {
         this.add(this.searchChoicesList);
         this.add(this.searchButton);
 
-        Processing dataProcess = new Processing();
-        this.dictionary = dataProcess.getDictionary();
+        this.searchFunctional = searchFunctional;
     }
-
-    public String[][] searchWord()
-    {
-        String[][] data = new String[this.dictionary.keySet().size()][2];
-
-        String searchKey = this.searchBar.getText();
-        if(this.dictionary.containsKey(searchKey))
-        {
-            data[0][0] = searchKey;
-            data[0][1] = String.join(" | ",this.dictionary.get(searchKey));
-        }else
-        {
-            int i = 0;
-            for(String key : this.dictionary.keySet())
-            {
-                data[i][0] = key;
-                data[i][1] = String.join(" | ",this.dictionary.get(key));
-                i++;
-            }
-        }
-        return data;
-    }
-
-    public String[][] searchDef()
-    {
-        String[][] data = new String[this.dictionary.keySet().size()][2];
-
-        String searchKey = this.searchBar.getText();
-
-        int i = 0;
-        for(String key : this.dictionary.keySet())
-        {
-            data[i][0] = key;
-            data[i][1] = String.join(" | ",this.dictionary.get(key));
-            i++;
-        }
-        return data;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.searchButton)
         {
             String[] colNames = {"Word", "Definitions"};
             String[][] data;
+            String search = this.searchBar.getText();
             if(this.searchChoicesList.getSelectedItem().equals("Word"))
             {
-                data = searchWord();
+                data = searchFunctional.searchWord(search);
             }else{
-                data = searchDef();
+                data = searchFunctional.searchDef(search);
             }
-            dictionaryWindow dictTable = new dictionaryWindow("Dictionary",300,300,colNames,data);
+            dictionaryWindow dictTable = new dictionaryWindow("Dictionary",900,600,colNames,data);
         }
     }
 }

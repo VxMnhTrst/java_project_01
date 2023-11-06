@@ -4,7 +4,6 @@ import Utils.Utils;
 
 import javax.swing.*;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class GUI extends JFrame {
@@ -15,7 +14,7 @@ public class GUI extends JFrame {
     private bottomJPanel bottomPanel;
     private dictionaryWindow dictionary;
 
-    public GUI(String title, int width, int height) {
+    public GUI(String title, int width, int height, FunctionalHandling.dictionary userDictionary) {
         this.setDefaultLookAndFeelDecorated(true);
         this.setTitle(title);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,7 +22,7 @@ public class GUI extends JFrame {
         this.mainJP = new JPanel();
         this.mainJP.setLayout(new BorderLayout());
 
-        this.topPanel = new topJPanel();
+        this.topPanel = new topJPanel(userDictionary);
 
         this.centerPanel = new centerJPanel();
 
@@ -41,4 +40,5 @@ public class GUI extends JFrame {
         this.pack();
         this.setVisible(true);
     }
+
 }

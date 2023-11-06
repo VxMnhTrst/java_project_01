@@ -36,13 +36,5 @@ public class leftJPanel extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 4;
         this.add(randomButton,gbc);
-
-//        gbc.gridx = 0;
-//        gbc.gridy = 0;
-//        this.leftPanel.add(Box.createRigidArea(new Dimension(50,0)),gbc);
-
-//        gbc.gridx = 2;
-//        gbc.gridy = 0;
-//        this.leftPanel.add(Box.createRigidArea(new Dimension(50,0)),gbc);
     }
 }

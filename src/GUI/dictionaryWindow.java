@@ -14,11 +14,14 @@ public class dictionaryWindow extends JFrame {
         dictPanel.setLayout(new BoxLayout(dictPanel,BoxLayout.PAGE_AXIS));
 
         this.dictTable = new JTable(data,colNames);
+        dictTable.setFont(new Font("Consolas", Font.BOLD, 18));
+        dictTable.setRowHeight(dictTable.getRowHeight()+6);
         JScrollPane dictScroll = new JScrollPane(this.dictTable);
         dictPanel.add(dictScroll);
 
         this.setContentPane(dictPanel);
         this.setMaximumSize(new Dimension(width, height));
+        this.setMinimumSize(new Dimension(width, height));
         this.pack();
         this.setVisible(true);
     }
