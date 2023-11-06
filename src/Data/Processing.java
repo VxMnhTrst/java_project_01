@@ -46,7 +46,6 @@ public class Processing {
                 dictionary.put(slang,definitions);
                 i++;
             }
-            System.out.println(dictionary.get("}:-)")[0]);
             reader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

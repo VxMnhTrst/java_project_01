@@ -35,19 +35,55 @@ public class topJPanel extends JPanel implements ActionListener {
         this.dictionary = dataProcess.getDictionary();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == this.searchButton && this.dictionary != null)
-        {
-            String[] colNames = {"Word", "Definitions"};
-            String[][] data = new String[this.dictionary.keySet().size()][2];
+    public String[][] searchWord()
+    {
+        String[][] data = new String[this.dictionary.keySet().size()][2];
 
+        String searchKey = this.searchBar.getText();
+        if(this.dictionary.containsKey(searchKey))
+        {
+            data[0][0] = searchKey;
+            data[0][1] = String.join(" | ",this.dictionary.get(searchKey));
+        }else
+        {
             int i = 0;
             for(String key : this.dictionary.keySet())
             {
                 data[i][0] = key;
                 data[i][1] = String.join(" | ",this.dictionary.get(key));
                 i++;
+            }
+        }
+        return data;
+    }
+
+    public String[][] searchDef()
+    {
+        String[][] data = new String[this.dictionary.keySet().size()][2];
+
+        String searchKey = this.searchBar.getText();
+
+        int i = 0;
+        for(String key : this.dictionary.keySet())
+        {
+            data[i][0] = key;
+            data[i][1] = String.join(" | ",this.dictionary.get(key));
+            i++;
+        }
+        return data;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == this.searchButton)
+        {
+            String[] colNames = {"Word", "Definitions"};
+            String[][] data;
+            if(this.searchChoicesList.getSelectedItem().equals("Word"))
+            {
+                data = searchWord();
+            }else{
+                data = searchDef();
             }
             dictionaryWindow dictTable = new dictionaryWindow("Dictionary",300,300,colNames,data);
         }

@@ -13,6 +13,7 @@ public class GUI extends JFrame {
     private centerJPanel centerPanel;
     private leftJPanel leftPanel;
     private bottomJPanel bottomPanel;
+    private dictionaryWindow dictionary;
 
     public GUI(String title, int width, int height) {
         this.setDefaultLookAndFeelDecorated(true);
