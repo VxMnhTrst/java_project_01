@@ -15,7 +15,7 @@ public class dictionaryWindow extends JFrame {
 
         this.dictTable = new JTable(data,colNames);
         dictTable.setFont(new Font("Consolas", Font.BOLD, 18));
-        dictTable.setRowHeight(dictTable.getRowHeight()+6);
+        dictTable.setRowHeight(dictTable.getRowHeight()+12);
         JScrollPane dictScroll = new JScrollPane(this.dictTable);
         dictPanel.add(dictScroll);
 
