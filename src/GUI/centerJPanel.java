@@ -18,6 +18,10 @@ public class centerJPanel extends JPanel implements ActionListener {
     private JButton resetButton;
     private dictOperate userDictOperate;
     private dataBase userDataBase;
+    private JLabel noti;
+    private JComboBox dupChoiceList;
+    private JButton dupSubmitButton;
+    private JPanel dupNotiPanel;
     public centerJPanel(dataBase userDataBase)
     {
         this.setLayout(new GridBagLayout());
@@ -30,7 +34,6 @@ public class centerJPanel extends JPanel implements ActionListener {
         JLabel defFormLabel = new JLabel("Definition:");
         this.defFormBar = new JTextField();
         this.defFormBar.setPreferredSize(new Dimension(300,25));
-
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -63,40 +66,107 @@ public class centerJPanel extends JPanel implements ActionListener {
         centerPanelButton.add(this.deleteButton);
         centerPanelButton.add(this.resetButton);
 
-        this.addButton.addActionListener(this);
-        this.editButton.addActionListener(this);
-        this.deleteButton.addActionListener(this);
-        this.resetButton.addActionListener(this);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
         this.add(centerPanelButton,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        this.add(Box.createRigidArea(new Dimension(0,15)),gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        this.noti = new JLabel("Dictionary operation");
+        noti.setFont(new Font("Consolas",Font.PLAIN,20));
+        this.add(this.noti,gbc);
+
+        this.dupNotiPanel = new JPanel();
+        this.dupNotiPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        JLabel dupLabel = new JLabel("Adding new slang duplicate?");
+        this.dupChoiceList = new JComboBox<>(new String[]{"Yes", "No"});
+        this.dupSubmitButton = new JButton("Submit");
+
+        this.dupNotiPanel.add(dupLabel);
+        this.dupNotiPanel.add(this.dupChoiceList);
+        this.dupNotiPanel.add(this.dupSubmitButton);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        this.add(this.dupNotiPanel,gbc);
+        this.dupNotiPanel.setVisible(false);
+
+        this.addButton.addActionListener(this);
+        this.editButton.addActionListener(this);
+        this.deleteButton.addActionListener(this);
+        this.resetButton.addActionListener(this);
+        this.dupSubmitButton.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.resetButton)
         {
-            userDictOperate.resetUSerDictionary();
+            String resetResult = userDictOperate.resetUSerDictionary();
+            this.noti.setText(resetResult);
         }
-        if(e.getSource() == this.addButton)
-        {
-            String newSlang = this.wordFormBar.getText();
-            String newDef = this.defFormBar.getText();
-            //adding new slang
-        }
+
         if(e.getSource() == this.editButton)
         {
             String editSlang = this.wordFormBar.getText();
             String editDef = this.defFormBar.getText();
 
             String editResult = userDictOperate.editSlang(editSlang,editDef);
+            if(editResult.contains("not"))
+            {
+                this.noti.setForeground(Color.RED);
+            }else{
+                this.noti.setForeground(Color.BLACK);
+            }
+            this.noti.setText(editResult);
         }
+
         if(e.getSource() == this.deleteButton)
         {
             String deleteSlang = this.wordFormBar.getText();
 
-            String result = userDictOperate.deleteSlang(deleteSlang);
+            String resultDelete = userDictOperate.deleteSlang(deleteSlang);
+            if(resultDelete.contains("not"))
+            {
+                this.noti.setForeground(Color.RED);
+            }else{
+                this.noti.setForeground(Color.BLACK);
+            }
+            this.noti.setText(resultDelete);
+        }
+
+        if(e.getSource() == this.addButton)
+        {
+            String newSlang = this.wordFormBar.getText();
+            String newDef = this.defFormBar.getText();
+
+            String addResult = userDictOperate.addSlang(newSlang,newDef,false);
+            if(addResult.contains("existed"))
+            {
+                this.dupNotiPanel.setVisible(true);
+            }
+            this.noti.setForeground(Color.BLACK);
+            this.noti.setText(addResult);
+        }
+        if(e.getSource() == this.dupSubmitButton)
+        {
+            this.dupNotiPanel.setVisible(false);
+            String dupChoice = String.valueOf(this.dupChoiceList.getSelectedItem());
+            if(dupChoice.equals("Yes"))
+            {
+                String newSlang = this.wordFormBar.getText();
+                String newDef = this.defFormBar.getText();
+
+                String addResult = this.userDictOperate.addSlang(newSlang,newDef,true);
+                this.noti.setForeground(Color.BLACK);
+                this.noti.setText(addResult);
+            }
         }
     }
 }

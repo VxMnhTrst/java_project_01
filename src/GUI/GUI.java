@@ -32,7 +32,7 @@ public class GUI extends JFrame {
 
         this.leftPanel = new leftJPanel(userDataBase);
 
-        this.rightPanel = new rightJPanel();
+        this.rightPanel = new rightJPanel(userDataBase);
 
         this.bottomPanel = new bottomJPanel(userDataBase);
 

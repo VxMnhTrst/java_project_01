@@ -10,7 +10,7 @@ public class Main {
         Processing dictData = new Processing();
         dataBase database = new dataBase(dictData);
 
-        GUI newGUI = new GUI("Slang Dictionary",1500,700,database);
+        GUI newGUI = new GUI("Slang Dictionary",1500,800,database);
 
     }
 }

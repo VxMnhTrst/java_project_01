@@ -20,9 +20,11 @@ public class leftJPanel extends JPanel implements ActionListener {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        this.randomWord = new JLabel("Đây là random word");
+        this.randomWord = new JLabel("Random word");
+        this.randomWord.setFont(new Font("Consolas",Font.PLAIN,20));
         randomWord.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        this.randomDef = new JLabel("Đây là random definition. Đây là random definition.");
+        this.randomDef = new JLabel("Definition");
+        this.randomDef.setFont(new Font("Consolas",Font.PLAIN,15));
         randomDef.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         randomDef.setPreferredSize(new Dimension(300, 25));
         this.randomButton = new JButton("Random");

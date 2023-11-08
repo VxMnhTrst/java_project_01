@@ -37,7 +37,7 @@ public class bottomJPanel extends JPanel implements ActionListener {
         bottomQuizPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.quizQuestion = new JLabel("This is quiz question.");
         quizQuestion.setFont(new Font("Consolas",Font.PLAIN,20));
-        this.quizAnswers = new String[]{"This is A", "This is BThis is BThis is B", "This is C", "This is D"};
+        this.quizAnswers = new String[]{"This is A", "This is B", "This is C", "This is D"};
         this.quizAnswersList = new JComboBox(quizAnswers);
         quizAnswersList.setFont(new Font("Consolas",Font.PLAIN,20));
         this.quizSubmit = new JButton("Submit answer");

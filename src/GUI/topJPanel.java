@@ -42,10 +42,10 @@ public class topJPanel extends JPanel implements ActionListener {
         {
             String[] colNames = {"Word", "Definitions"};
             String[][] data;
-            HashMap<String, String[]> defData;
             String search = this.searchBar.getText();
             if(this.searchChoicesList.getSelectedItem().equals("Word"))
             {
+                this.userDataBase.addingSearchHistory(search);
                 data = searchFunctional.searchWord(this.userDataBase,search);
             }else{
                 data = searchFunctional.searchDef(this.userDataBase,search);
@@ -54,5 +54,3 @@ public class topJPanel extends JPanel implements ActionListener {
         }
     }
 }
-
-
