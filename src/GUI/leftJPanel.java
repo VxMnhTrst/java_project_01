@@ -1,5 +1,6 @@
 package GUI;
 
+import Data.dataBase;
 import Utils.Utils;
 import FunctionalHandling.randomSlang;
 
@@ -13,7 +14,8 @@ public class leftJPanel extends JPanel implements ActionListener {
     private JLabel randomDef;
     private JButton randomButton;
     private randomSlang random;
-    public leftJPanel(randomSlang random)
+    private dataBase userDataBase;
+    public leftJPanel(dataBase userDataBase)
     {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -46,14 +48,15 @@ public class leftJPanel extends JPanel implements ActionListener {
         gbc.gridy = 4;
         this.add(randomButton,gbc);
 
-        this.random = random;
+        this.random = new randomSlang(userDataBase);
+        this.userDataBase = userDataBase;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.randomButton)
         {
-            String[] newRandomSlang = this.random.getRandomSlang();
+            String[] newRandomSlang = this.random.getRandomSlang(userDataBase);
             this.randomWord.setText(newRandomSlang[0]);
             this.randomDef.setText(newRandomSlang[1]);
         }

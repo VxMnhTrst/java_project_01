@@ -1,23 +1,35 @@
 package GUI;
 
+import Data.dataBase;
+import FunctionalHandling.dictOperate;
 import Utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class centerJPanel extends JPanel {
-    public centerJPanel()
+public class centerJPanel extends JPanel implements ActionListener {
+    private JTextField wordFormBar;
+    private JTextField defFormBar;
+    private JButton addButton;
+    private JButton editButton;
+    private JButton deleteButton;
+    private JButton resetButton;
+    private dictOperate userDictOperate;
+    private dataBase userDatabase;
+    public centerJPanel(dataBase userDataBase)
     {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
         JLabel wordFormLabel = new JLabel("Word:");
-        JTextField wordFormBar = new JTextField();
-        wordFormBar.setPreferredSize(new Dimension(300,25));
+        this.wordFormBar = new JTextField();
+        this.wordFormBar.setPreferredSize(new Dimension(300,25));
 
         JLabel defFormLabel = new JLabel("Definition:");
-        JTextField defFormBar = new JTextField();
-        defFormBar.setPreferredSize(new Dimension(300,25));
+        this.defFormBar = new JTextField();
+        this.defFormBar.setPreferredSize(new Dimension(300,25));
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -38,19 +50,42 @@ public class centerJPanel extends JPanel {
         JPanel centerPanelButton = new JPanel();
         centerPanelButton.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        JButton addButton = new JButton("Add new word");
-        JButton editButton = new JButton("Edit existing word");
-        JButton deleteButton = new JButton("Delete existing word");
-        JButton resetButton = new JButton("Reset dictionary");
+        this.addButton = new JButton("Add new word");
+        this.editButton = new JButton("Edit existing word");
+        this.deleteButton = new JButton("Delete existing word");
+        this.resetButton = new JButton("Reset dictionary");
+        this.userDictOperate = new dictOperate();
+        this.userDatabase = userDataBase;
 
 
-        centerPanelButton.add(addButton);
-        centerPanelButton.add(editButton);
-        centerPanelButton.add(deleteButton);
-        centerPanelButton.add(resetButton);
+        centerPanelButton.add(this.addButton);
+        centerPanelButton.add(this.editButton);
+        centerPanelButton.add(this.deleteButton);
+        centerPanelButton.add(this.resetButton);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
         this.add(centerPanelButton,gbc);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == this.resetButton)
+        {
+            userDictOperate.resetUSerDictionary(this.userDatabase);
+        }
+        if(e.getSource() == this.addButton)
+        {
+            String newSlang = this.wordFormBar.getText();
+            String newDef = this.defFormBar.getText();
+            //adding new slang
+        }
+        if(e.getSource() == this.editButton)
+        {
+            String editSlang = this.wordFormBar.getText();
+            String editDef = this.defFormBar.getText();
+
+            userDictOperate.editSlang(this.userDatabase,editSlang,editDef);
+        }
     }
 }

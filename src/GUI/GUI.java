@@ -1,5 +1,6 @@
 package GUI;
 
+import Data.dataBase;
 import FunctionalHandling.randomSlang;
 import FunctionalHandling.dictionary;
 import Utils.Utils;
@@ -17,7 +18,7 @@ public class GUI extends JFrame {
     private bottomJPanel bottomPanel;
     private dictionaryWindow dictionary;
 
-    public GUI(String title, int width, int height, dictionary userDictionary, randomSlang userRandom) {
+    public GUI(String title, int width, int height, dataBase userDataBase) {
         this.setDefaultLookAndFeelDecorated(true);
         this.setTitle(title);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,15 +26,15 @@ public class GUI extends JFrame {
         this.mainJP = new JPanel();
         this.mainJP.setLayout(new BorderLayout());
 
-        this.topPanel = new topJPanel(userDictionary);
+        this.topPanel = new topJPanel(userDataBase);
 
-        this.centerPanel = new centerJPanel();
+        this.centerPanel = new centerJPanel(userDataBase);
 
-        this.leftPanel = new leftJPanel(userRandom);
+        this.leftPanel = new leftJPanel(userDataBase);
 
         this.rightPanel = new rightJPanel();
 
-        this.bottomPanel = new bottomJPanel();
+        this.bottomPanel = new bottomJPanel(userDataBase);
 
         this.mainJP.add(Utils.setPadding(topPanel, 20, 10, true), BorderLayout.PAGE_START);
         this.mainJP.add(Utils.setPadding(this.centerPanel, 50, 10, true), BorderLayout.CENTER);

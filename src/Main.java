@@ -2,6 +2,7 @@ import Data.Processing;
 import Data.dataBase;
 import FunctionalHandling.dictionary;
 import FunctionalHandling.randomSlang;
+import FunctionalHandling.dictOperate;
 import GUI.GUI;
 
 public class Main {
@@ -9,10 +10,12 @@ public class Main {
         Processing dictData = new Processing();
         dataBase database = new dataBase(dictData);
 
-        dictionary userDictionary = new dictionary(database.getUserSlangDictionary(),database.getUserDefDictionary());
-        randomSlang userRandom = new randomSlang(database.getUserSlangDictionary());
+//        dictionary userDictionary = new dictionary();
+//        randomSlang userRandom = new randomSlang(database);
+//        dictOperate userDictOperate = new dictOperate(database.getUserSlangDictionary(),database.getRawSlangDictionary());
 
-        GUI newGUI = new GUI("Slang Dictionary",1500,700,userDictionary,userRandom);
+
+        GUI newGUI = new GUI("Slang Dictionary",1500,700,database);
 
     }
 }

@@ -1,43 +1,58 @@
 package FunctionalHandling;
 
+import Data.dataBase;
 import Utils.Utils;
+import jdk.jshell.execution.Util;
 
 import java.util.HashMap;
 
 public class dictionary {
-    private HashMap<String, String[]> slangDictionary;
-    private HashMap<String, String[]> defDictionary;
-    public dictionary(HashMap<String, String[]> slangDictionary, HashMap<String, String[]> defDictionary)
+    public dictionary()
     {
-        this.slangDictionary = slangDictionary;
-        this.defDictionary = defDictionary;
     }
-    public String[][] searchWord(String searchKey)
+    public String[][] searchWord(dataBase userDataBase, String searchKey)
     {
         HashMap<String, String[]> wordSearchHash = new HashMap<>();
+        searchKey = searchKey.trim();
 
-        if(this.slangDictionary.containsKey(searchKey))
+        if(searchKey.trim().isEmpty())
         {
-            wordSearchHash.put(searchKey,slangDictionary.get(searchKey));
+            return Utils.convertHashMapToTableData(userDataBase.getUserDictionary());
+        }
+
+        if(userDataBase.getUserDictionary().containsKey(searchKey))
+        {
+            wordSearchHash.put(searchKey,userDataBase.getUserDictionary().get(searchKey));
             return Utils.convertHashMapToTableData(wordSearchHash);
         }
-        return Utils.convertHashMapToTableData(slangDictionary);
+        return Utils.convertHashMapToTableData(userDataBase.getUserDictionary());
     }
-
-    public String[][] searchDef(String searchDef)
+    public String[][] searchDef(dataBase userDataBase, String searchDef)
     {
-        HashMap<String, String[]> wordSearchHash = new HashMap<>();
+        HashMap<String, String[]> slangWithDef = new HashMap<>();
+        searchDef = searchDef.trim();
 
-        if(this.defDictionary.containsKey(searchDef))
+        if(searchDef.isEmpty())
         {
-            wordSearchHash.put(searchDef,defDictionary.get(searchDef));
-            return Utils.convertHashMapToTableData(wordSearchHash);
+            return Utils.convertHashMapToTableData(userDataBase.getUserDictionary());
         }
-        return Utils.convertHashMapToTableData(defDictionary);
+
+        int i = 0;
+        for(String key : userDataBase.getUserDictionary().keySet())
+        {
+            String def = String.join(" | ",userDataBase.getUserDictionary().get(key));
+            if(Utils.containsIgnoreCase(def,searchDef))
+            {
+                slangWithDef.put(key,userDataBase.getUserDictionary().get(key));
+            }
+        }
+        if(slangWithDef.size() == 0)
+        {
+            return Utils.convertHashMapToTableData(userDataBase.getUserDictionary());
+        }else {
+            return Utils.convertHashMapToTableData(slangWithDef);
+        }
+
     }
 
-    public void setDictionary(HashMap<String, String[]> slangDictionary,HashMap<String, String[]> defDictionary) {
-        this.slangDictionary = slangDictionary;
-        this.defDictionary = defDictionary;
-    }
 }

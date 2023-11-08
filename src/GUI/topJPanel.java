@@ -1,11 +1,13 @@
 package GUI;
 
+import Data.dataBase;
 import FunctionalHandling.dictionary;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 public class topJPanel extends JPanel implements ActionListener {
     private JLabel searchBarLabel;
@@ -14,7 +16,8 @@ public class topJPanel extends JPanel implements ActionListener {
     private JComboBox searchChoicesList;
     private JButton searchButton;
     private dictionary searchFunctional;
-    public topJPanel(dictionary searchFunctional) {
+    private dataBase userDataBase;
+    public topJPanel(dataBase userDataBase) {
         this.searchBarLabel = new JLabel(
                 "Keyword");
         this.searchBar = new JTextField();
@@ -30,7 +33,8 @@ public class topJPanel extends JPanel implements ActionListener {
         this.add(this.searchChoicesList);
         this.add(this.searchButton);
 
-        this.searchFunctional = searchFunctional;
+        this.searchFunctional = new dictionary();
+        this.userDataBase = userDataBase;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -38,12 +42,13 @@ public class topJPanel extends JPanel implements ActionListener {
         {
             String[] colNames = {"Word", "Definitions"};
             String[][] data;
+            HashMap<String, String[]> defData;
             String search = this.searchBar.getText();
             if(this.searchChoicesList.getSelectedItem().equals("Word"))
             {
-                data = searchFunctional.searchWord(search);
+                data = searchFunctional.searchWord(this.userDataBase,search);
             }else{
-                data = searchFunctional.searchDef(search);
+                data = searchFunctional.searchDef(this.userDataBase,search);
             }
             dictionaryWindow dictTable = new dictionaryWindow("Dictionary",900,600,colNames,data);
         }
