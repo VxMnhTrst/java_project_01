@@ -1,37 +1,41 @@
 package FunctionalHandling;
 
+import Data.Processing;
 import Data.dataBase;
 
 import java.util.Dictionary;
 import java.util.HashMap;
 
 public class dictOperate {
-    public dictOperate()
+    private dataBase userDataBase;
+    public dictOperate(dataBase userDataBase)
     {
-
+        this.userDataBase = userDataBase;
     }
-    public String deleteSlang(dataBase userDataBase, String key)
+    public String deleteSlang(String key)
     {
-        if(userDataBase.getUserDictionary().containsKey(key))
+        if(!this.userDataBase.getUserDictionary().containsKey(key))
         {
             return "Delete: Slang not found.";
         }
-        userDataBase.getUserDictionary().remove(key);
+        this.userDataBase.getUserDictionary().remove(key);
         return "Delete: Slang " + key + " deleted.";
     }
-    public String editSlang(dataBase userDataBase,String key, String def)
+    public String editSlang(String key, String def)
     {
         String[] defList = def.split(" | ");
-        if(userDataBase.getUserDictionary().containsKey(key))
+        if(this.userDataBase.getUserDictionary().containsKey(key))
         {
-            userDataBase.getUserDictionary().put(key,defList);
+            this.userDataBase.getUserDictionary().put(key,defList);
+            System.out.println(String.format("Edit: Slang " + key + " edited."));
             return "Edit: Slang " + key + " edited.";
         }else {
+            System.out.println(String.format("Edit: Slang not found"));
             return "Edit: Slang not found";
         }
     }
-    public void resetUSerDictionary(dataBase userDataBase)
+    public void resetUSerDictionary()
     {
-        userDataBase.setUserDictionary(userDataBase.getRawDictionary());
+        this.userDataBase.resetUserDatabase();
     }
 }

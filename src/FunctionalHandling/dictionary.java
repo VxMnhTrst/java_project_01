@@ -52,7 +52,6 @@ public class dictionary {
         }else {
             return Utils.convertHashMapToTableData(slangWithDef);
         }
-
     }
 
 }

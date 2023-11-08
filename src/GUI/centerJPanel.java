@@ -17,7 +17,7 @@ public class centerJPanel extends JPanel implements ActionListener {
     private JButton deleteButton;
     private JButton resetButton;
     private dictOperate userDictOperate;
-    private dataBase userDatabase;
+    private dataBase userDataBase;
     public centerJPanel(dataBase userDataBase)
     {
         this.setLayout(new GridBagLayout());
@@ -30,6 +30,7 @@ public class centerJPanel extends JPanel implements ActionListener {
         JLabel defFormLabel = new JLabel("Definition:");
         this.defFormBar = new JTextField();
         this.defFormBar.setPreferredSize(new Dimension(300,25));
+
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -54,14 +55,18 @@ public class centerJPanel extends JPanel implements ActionListener {
         this.editButton = new JButton("Edit existing word");
         this.deleteButton = new JButton("Delete existing word");
         this.resetButton = new JButton("Reset dictionary");
-        this.userDictOperate = new dictOperate();
-        this.userDatabase = userDataBase;
-
+        this.userDictOperate = new dictOperate(userDataBase);
+        this.userDataBase = userDataBase;
 
         centerPanelButton.add(this.addButton);
         centerPanelButton.add(this.editButton);
         centerPanelButton.add(this.deleteButton);
         centerPanelButton.add(this.resetButton);
+
+        this.addButton.addActionListener(this);
+        this.editButton.addActionListener(this);
+        this.deleteButton.addActionListener(this);
+        this.resetButton.addActionListener(this);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -72,7 +77,7 @@ public class centerJPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.resetButton)
         {
-            userDictOperate.resetUSerDictionary(this.userDatabase);
+            userDictOperate.resetUSerDictionary();
         }
         if(e.getSource() == this.addButton)
         {
@@ -85,7 +90,13 @@ public class centerJPanel extends JPanel implements ActionListener {
             String editSlang = this.wordFormBar.getText();
             String editDef = this.defFormBar.getText();
 
-            userDictOperate.editSlang(this.userDatabase,editSlang,editDef);
+            String editResult = userDictOperate.editSlang(editSlang,editDef);
+        }
+        if(e.getSource() == this.deleteButton)
+        {
+            String deleteSlang = this.wordFormBar.getText();
+
+            String result = userDictOperate.deleteSlang(deleteSlang);
         }
     }
 }

@@ -53,7 +53,7 @@ public class Processing {
             e.printStackTrace();
         }
     }
-    public HashMap<String, String[]> getDictionary() {
-        return slangDictionary;
+    public HashMap<String, String[]> getCloneDictionary() {
+        return (HashMap<String, String[]>) this.slangDictionary.clone();
     }
 }
