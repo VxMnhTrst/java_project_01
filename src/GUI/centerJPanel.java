@@ -109,6 +109,7 @@ public class centerJPanel extends JPanel implements ActionListener {
         if(e.getSource() == this.resetButton)
         {
             String resetResult = userDictOperate.resetUSerDictionary();
+            this.noti.setForeground(Color.BLACK);
             this.noti.setText(resetResult);
         }
 
